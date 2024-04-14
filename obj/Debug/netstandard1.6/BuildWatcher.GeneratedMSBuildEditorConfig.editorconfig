@@ -1,0 +1,5 @@
+is_global = true
+build_property.RootNamespace = BuildWatcher
+build_property.ProjectDir = D:\source\watcher\BuildWatcher\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

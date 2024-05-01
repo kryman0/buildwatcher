@@ -1,26 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+		<AssemblyName>BuildWatcher</AssemblyName>
 		<OutputType>Exe</OutputType>
-		<OutDir>bin\$(Configuration)</OutDir>
-		<TargetFrameworks>net481;net8.0</TargetFrameworks> <!--netstandard2.0;-->
+		<!--<OutDir>bin\$(Configuration)</OutDir>-->
+		<TargetFrameworks>net481;net8.0</TargetFrameworks>
 	  <LangVersion>default</LangVersion>
+    <!--<TargetFramework>net472</TargetFramework>-->
     <!--<TargetFramework>net8.0</TargetFramework>-->
     <!--<TargetFramework>netstandard2.0</TargetFramework>-->
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-	<!--<PropertyGroup Condition="$(TargetFramework) == net481">
-		<OutDir>temp</OutDir>
-	</PropertyGroup>-->
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Build" ExcludeAssets="runtime" Version="17.9.5" />
-		<!--<PackageReference Include="Microsoft.Build.Framework" ExcludeAssets="runtime" Version="17.9.5" />-->
 		<PackageReference Include="Microsoft.Build.Locator" Version="1.7.8" />
-  </ItemGroup>
-	<!--<ItemGroup Condition="'$(TargetFramework)' == 'net481'">
-		<Reference Include="System.Runtime.Remoting" />
-	</ItemGroup>-->	
-	<!--<ItemGroup Condition="'$(TargetFrameWork)' == 'net8.0'">
-		<Reference Include="System.Configuration.ConfigurationManager" />
-	</ItemGroup>-->
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' != 'netstandard2.0'">
+		<PackageReference Include="Microsoft.Build" ExcludeAssets="runtime" Version="17.9.5" />
+		<!--<PackageReference Include="Microsoft.Build.Framework" ExcludeAssets="runtime" Version="17.9.5" />-->		
+		<!--<PackageReference Include="Microsoft.Build.Utilities.Core" ExcludeAssets="runtime" Version="17.9.5" />-->		
+	</ItemGroup>
+	
+	<Target Name="test">
+		<Message Text="VisualStudioVersion: $(VisualStudioVersion)" />
+		<Message Text="VSToolsPath: $(VSToolsPath)" />
+		<Message Text="MSBuildExtensionsPath32: $(MSBuildExtensionsPath32)" />
+		<Message Text="MSBuildToolsPath: $(MSBuildToolsPath)" />
+		<Message Text="SDK40ToolsPath: $(SDK40ToolsPath)" />
+		<Message Text="SDK35ToolsPath: $(SDK35ToolsPath)" />
+		<Message Text="MSBuildBinPath: $(MSBuildBinPath)" />
+	</Target>
 </Project>

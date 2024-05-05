@@ -1,8 +1,8 @@
-﻿//using Microsoft.Build;
-//using Microsoft.Build.Construction;
-//using Microsoft.Build.Evaluation;
-//using Microsoft.Build.Execution;
-//using Microsoft.Build.Locator;
+﻿using Microsoft.Build;
+using Microsoft.Build.Construction;
+using Microsoft.Build.Evaluation;
+using Microsoft.Build.Execution;
+using Microsoft.Build.Locator;
 //using Microsoft.Build.Utilities;
 
 namespace BuildWatcher;
@@ -14,15 +14,12 @@ internal class Program
         string pathToWatch; 
         string pathToProj;
         string pathToMSBuild;
+        pathToMSBuild = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\";
 
         var dotnetFactory = new TargetDotNetVersionFactory();
-        var dotNetVersion = dotnetFactory.GetDotNetVersion();
+        var dotNetVersion = dotnetFactory.TargetDotNetVersion(pathToMSBuild);
         
-        pathToWatch = Path.GetFullPath("D:\\source\\ConsoleAppTest\\ConsoleAppTest\\");            
-        pathToProj = pathToWatch + "ConsoleAppTest.csproj";
-        pathToMSBuild = "C:\\Program Files\\dotnet\\sdk\\8.0.203\\";
-
-        //pathToWatch = Path.GetFullPath("D:\\source\\ConsoleAppTest\\ConsoleAppTest\\");
+        //pathToWatch = Path.GetFullPath("D:\\source\\ConsoleAppTest\\ConsoleAppTest\\");            
         //pathToProj = pathToWatch + "ConsoleAppTest.csproj";
         //pathToMSBuild = "C:\\Program Files\\dotnet\\sdk\\8.0.203\\";
 
@@ -30,12 +27,8 @@ internal class Program
         pathToProj = pathToWatch + "WebFormsTest2.csproj";
         pathToMSBuild = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\";
 
-        //MSBuildLocator.RegisterMSBuildPath(pathToMSBuild);
-        //Build(pathToProj);
-
-        //var vs = MSBuildLocator.QueryVisualStudioInstances().OrderByDescending(v => v.Version).FirstOrDefault();
-
-        //RegisterVSInstance();
+        MSBuildLocator.RegisterMSBuildPath(dotNetVersion.PathToMSBuild);
+        Build(pathToProj);
 
         //try
         //{
@@ -61,39 +54,40 @@ internal class Program
     //    return ToolLocationHelper.GetPathToBuildTools("12.0");
     //}
 
-    //static void Build(string pathToProject)
-    //{
-    //    //var a = ToolLocationHelper.GetTargetPlatformSdks();
+    static void Build(string pathToProject)
+    {
+        //var a = ToolLocationHelper.GetTargetPlatformSdks();
 
-    //    using (var bm = new BuildManager("WebFormsTest2"))
-    //    {
-    //        var projColl = new ProjectCollection();
+        using (var bm = new BuildManager("WebFormsTest2"))
+        {
+            var projColl = new ProjectCollection();
 
-    //        var projRootEl = ProjectRootElement.Open(pathToProject);
-    //        var netVersion = projRootEl.Properties.Where(p => p.ElementName.ToString() == "TargetFrameworkVersion").FirstOrDefault();
-    //        var imports = projRootEl.Imports.Select(i => i.ProjectLocation);
+            var projRootEl = ProjectRootElement.Open(pathToProject);
+            var netVersion = projRootEl.Properties.Where(p => p.ElementName.ToString() == "TargetFrameworkVersion").FirstOrDefault();
+            var imports = projRootEl.Imports.Select(i => i.ProjectLocation);
 
-    //        var webForms2Proj = new Project(
-    //            projRootEl,
-    //            globalProperties: null,
-    //            toolsVersion: null,
-    //            projColl,
-    //            loadSettings: ProjectLoadSettings.DoNotEvaluateElementsWithFalseCondition);
+            var webForms2Proj = new Project(
+                projRootEl,
+                globalProperties: null,
+                toolsVersion: null,
+                projColl,
+                loadSettings: ProjectLoadSettings.DoNotEvaluateElementsWithFalseCondition);
 
-    //        var bmparams = new BuildParameters(projColl);
+            var bmparams = new BuildParameters(projColl);
 
-    //        ////var webForms2Proj = new Project(projRootEl, null, projColl.DefaultToolsVersion, null, projColl, loadSettings: ProjectLoadSettings.Default);
+            ////var webForms2Proj = new Project(projRootEl, null, projColl.DefaultToolsVersion, null, projColl, loadSettings: ProjectLoadSettings.Default);
 
-    //        var projInstance = bm.GetProjectInstanceForBuild(webForms2Proj);
+            var projInstance = bm.GetProjectInstanceForBuild(webForms2Proj);
 
-    //        var bmreqdata = new BuildRequestData(projInstance, ["Build"]);
-    //        bm.BeginBuild(bmparams);
-    //        var bmres = bm.BuildRequest(bmreqdata);
-    //        Console.WriteLine(bmres.OverallResult);
-    //        //Console.ReadLine();
-    //        bm.EndBuild();
-    //    }
-    //}
+            var bmreqdata = new BuildRequestData(projInstance, ["Build"]);
+            bm.BeginBuild(bmparams);
+            var bmres = bm.BuildRequest(bmreqdata);
+            Console.WriteLine(bmres.OverallResult);
+            //Console.ReadLine();
+            bm.EndBuild();
+        }
+    }
+    
     //static VisualStudioInstance? RegisterVSInstance(string version, ProjectRootElement p = null)
     //{
 

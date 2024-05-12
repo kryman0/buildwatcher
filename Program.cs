@@ -1,4 +1,5 @@
 ﻿using BuildWatcher;
+using BuildWatcher.CommandLineArgs;
 using Microsoft.Build;
 using Microsoft.Build.Construction;
 using Microsoft.Build.Evaluation;
@@ -10,6 +11,8 @@ string pathToWatch;
 string pathToProj;
 string pathToMSBuild;
 pathToMSBuild = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\";
+
+var clArgs = new CommandLineArgs();
 
 var dotnetFactory = new TargetDotNetVersionFactory();
 var dotNetVersion = dotnetFactory.TargetDotNetVersion(pathToMSBuild);

@@ -12,7 +12,7 @@ string pathToProj;
 string pathToMSBuild;
 pathToMSBuild = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\";
 
-var clArgs = new CommandLineArgs();
+// validate and invoke cl args
 
 var dotnetFactory = new TargetDotNetVersionFactory();
 var dotNetVersion = dotnetFactory.TargetDotNetVersion(pathToMSBuild);

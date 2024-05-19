@@ -1,5 +1,4 @@
 ﻿using BuildWatcher;
-using BuildWatcher.CommandLineArgs;
 using Microsoft.Build;
 using Microsoft.Build.Construction;
 using Microsoft.Build.Evaluation;
@@ -12,10 +11,9 @@ string pathToProj;
 string pathToMSBuild;
 pathToMSBuild = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\";
 
-// validate and invoke cl args
+var clArgs = new CommandLineArgs();
 
-var dotnetFactory = new TargetDotNetVersionFactory();
-var dotNetVersion = dotnetFactory.TargetDotNetVersion(pathToMSBuild);
+var dotNetVersion = new TargetDotNetVersionFactory(clArgs.PathToMSBuild).TargetedDotNetVersion;
 
 //pathToWatch = Path.GetFullPath("D:\\source\\ConsoleAppTest\\ConsoleAppTest\\");            
 //pathToProj = pathToWatch + "ConsoleAppTest.csproj";

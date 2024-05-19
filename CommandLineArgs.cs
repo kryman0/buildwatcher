@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BuildWatcher.Validators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,15 @@ using System.Threading.Tasks;
 
 namespace BuildWatcher
 {
-    internal static class CommandLineArgs
+    internal class CommandLineArgs
     {
-        public static string PathToProj => Path.GetFullPath(Environment.GetCommandLineArgs()[1]);
-        public static string PathToWatch => Environment.GetCommandLineArgs()[2];
-        public static string PathToMSBuild => Environment.GetCommandLineArgs()[3];
+        public string PathToProj => Path.GetFullPath(Environment.GetCommandLineArgs()[1]);
+        public string PathToWatch => Path.GetFullPath(Environment.GetCommandLineArgs()[2]);
+        public string PathToMSBuild => Path.GetFullPath(Environment.GetCommandLineArgs()[3]);
+
+        public CommandLineArgs()
+        {
+            CommandLineArgsValidator.ValidateCommandLineArgs();
+        }
     }
 }

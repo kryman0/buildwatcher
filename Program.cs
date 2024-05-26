@@ -11,37 +11,12 @@ var dotNetVersion = TargetDotNetVersionFactory.TargetDotNetVersion(clArgs.PathTo
 
 MSBuildLocator.RegisterMSBuildPath(dotNetVersion.PathToMSBuild);
 
-void Build(string pathToProject)
-{
-    using (var bm = new BuildManager())
-    {
-        var projColl = new ProjectCollection();
-
-        var projRootEl = ProjectRootElement.Open(pathToProject);
-        
-        var project = new Project(
-            projRootEl,
-            globalProperties: null,
-            toolsVersion: null,
-            projColl,
-            loadSettings: ProjectLoadSettings.DoNotEvaluateElementsWithFalseCondition);
-
-        var bmparams = new BuildParameters(projColl);
-
-        var projInstance = bm.GetProjectInstanceForBuild(project);
-
-        var bmreqdata = new BuildRequestData(projInstance, ["Build"]);
-        bm.BeginBuild(bmparams);
-        var bmres = bm.BuildRequest(bmreqdata);
-        bm.EndBuild();
-    }
-}
 
 void OnChanged(object sender, FileSystemEventArgs e)
 {
     if (e.ChangeType == WatcherChangeTypes.Changed)
     {
-        Build(clArgs.PathToProj);
+        BuildWatcher.Handlers.BuildHandler.Build(clArgs.PathToProj, null);
 
         Console.WriteLine(
             $"File or Directory changed: {e.Name}\n" +
@@ -68,8 +43,7 @@ try
         
         Console.ReadLine();
     }
-}
-catch (Exception ex)
+} catch (Exception ex)
 {
     throw new Exception(ex.Message);
 }

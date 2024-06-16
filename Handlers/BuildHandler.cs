@@ -11,7 +11,7 @@ namespace BuildWatcher.Handlers
 {
     internal static class BuildHandler
     {
-        public static void Build(string pathToProject, string[]? defaultTargetsToBuild)
+        public static void Build(string pathToProject, string[]? defaultTargetsToBuild = null)
         {
             if (defaultTargetsToBuild == null)
             {

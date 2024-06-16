@@ -1,4 +1,5 @@
 ﻿using BuildWatcher;
+using BuildWatcher.Handlers;
 using Microsoft.Build.Construction;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Execution;
@@ -14,17 +15,17 @@ MSBuildLocator.RegisterMSBuildPath(dotNetVersion.PathToMSBuild);
 
 void OnChanged(object sender, FileSystemEventArgs e)
 {
-    if (e.ChangeType == WatcherChangeTypes.Changed)
-    {
-        BuildWatcher.Handlers.BuildHandler.Build(clArgs.PathToProj, null);
+    if (e.ChangeType == WatcherChangeTypes.Changed && e.FullPath.Contains(".cs"))
+    {        
+        BuildHandler.Build(clArgs.PathToProj, null);
 
         Console.WriteLine(
             $"File or Directory changed: {e.Name}\n" +
             $"Location of the change: {e.FullPath}\n" +
             $"ChangeType: {e.ChangeType}\n");
-    }    
 
-    Console.WriteLine("Press Enter to exit:\n");
+        Console.WriteLine("Press Enter to exit:\n");
+    }        
 }
 
 try

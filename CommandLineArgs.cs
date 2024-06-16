@@ -9,13 +9,38 @@ namespace BuildWatcher
 {
     internal class CommandLineArgs
     {
-        public string PathToProj => Path.GetFullPath(Environment.GetCommandLineArgs()[1]);
-        public string PathToWatch => Path.GetFullPath(Environment.GetCommandLineArgs()[2]);
-        public string PathToMSBuild => Path.GetFullPath(Environment.GetCommandLineArgs()[3]);
+        private const string _projFlag = "-proj:";
+        private const string _watchFlag = "-watch:";
+        private const string _msbuildFlag = "-msbuild:";
+
+        private void SetCLArgs()
+        {
+            foreach (string flag in Environment.GetCommandLineArgs())
+            {
+                if (flag.StartsWith(_projFlag))
+                {
+                    PathToProj = flag.Substring(_projFlag.Length);
+                }
+                else if (flag.StartsWith(_watchFlag))
+                {
+                    PathToWatch = flag.Substring(_watchFlag.Length);
+                }
+                else if (flag.StartsWith(_msbuildFlag))
+                {
+                    PathToMSBuild = flag.Substring(_msbuildFlag.Length);
+                }
+            }
+        }
+        
+        public string? PathToProj { get; private set; }
+        public string? PathToWatch { get; private set; }
+        public string? PathToMSBuild { get; private set; }
 
         public CommandLineArgs()
         {
             CommandLineArgsValidator.ValidateCommandLineArgs();
-        }
+
+            SetCLArgs();
+        }        
     }
 }

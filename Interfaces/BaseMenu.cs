@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BuildWatcher.Interfaces
 {
-    internal interface IMenu
+    internal class BaseMenu
     {
-        public string Menu {  get; }
+        
     }
 }

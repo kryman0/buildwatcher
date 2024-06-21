@@ -6,9 +6,11 @@ using Microsoft.Build.Execution;
 using Microsoft.Build.Locator;
 
 //pathToMSBuild = "C:\\Program Files\\dotnet\\sdk\\8.0.203\\";
-var clArgs = new CommandLineArgs();
+//var clArgs = new CommandLineArgs();
 
-var dotNetVersion = TargetDotNetVersionFactory.TargetDotNetVersion(clArgs.PathToMSBuild);
+CommandLineArgs.Validate();
+
+var dotNetVersion = TargetDotNetVersionFactory.TargetDotNetVersion(CommandLineArgs.PathToMSBuild);
 
 MSBuildLocator.RegisterMSBuildPath(dotNetVersion.PathToMSBuild);
 
@@ -17,7 +19,7 @@ void OnChanged(object sender, FileSystemEventArgs e)
 {
     if (e.ChangeType == WatcherChangeTypes.Changed && e.FullPath.Contains(".cs"))
     {        
-        BuildHandler.Build(clArgs.PathToProj, null);
+        BuildHandler.Build(CommandLineArgs.PathToProj, null);
 
         Console.WriteLine(
             $"File or Directory changed: {e.Name}\n" +
@@ -30,7 +32,7 @@ void OnChanged(object sender, FileSystemEventArgs e)
 
 try
 {
-    using (var fsWatcher = new FileSystemWatcher(clArgs.PathToWatch))
+    using (var fsWatcher = new FileSystemWatcher(CommandLineArgs.PathToWatch))
     {
         fsWatcher.EnableRaisingEvents = true;
         fsWatcher.IncludeSubdirectories = true;

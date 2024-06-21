@@ -7,39 +7,38 @@ using System.Threading.Tasks;
 
 namespace BuildWatcher.Interfaces
 {
-    internal class ConsoleMenu : BaseMenu, IMenu
+    internal static class ConsoleMenu
     {
         private const int _optionProject = 1;
         private const int _optionWatch = 2;
         private const int _optionMSBuild = 3;
 
-        private string _presentMenuOptions => new StringBuilder(
+        private readonly static string _presentMenuOptions = 
             "Choose an option:" + Environment.NewLine +
             _configureProject + Environment.NewLine +
             _configureWatch + Environment.NewLine +
-            _configureMSBuild + Environment.NewLine
-        ).ToString();
+            _configureMSBuild + Environment.NewLine;
 
-        private string _configureProject => "1. Configure Project";
-        private string _configureWatch => "2. Configure Folder(s) to watch";
-        private string _configureMSBuild => "3. Configure MSBuild";
+        private const string _configureProject = "1. Configure Project"; // add clargs and modify/remove below
+        private const string _configureWatch = "2. Configure Folder";
+        private const string _configureMSBuild = "3. Configure MSBuild";
 
-        private void PresentMenu()
+        private static void PresentMenu()
         {
             Console.WriteLine(_presentMenuOptions);
             
-            var input = Console.ReadLine();
-            
-            GetMenuByInputOption(input);
+            GetMenuByInputOption();
         }
 
-        private void GetMenuByInputOption(string? option)
-        {            
-            if (int.TryParse(option, out int result)) {
+        private static void GetMenuByInputOption(string? pathToProj = null, string? pathToWatch = null, string? pathToMSBuild = null)
+        {
+            var input = Console.ReadLine();
+
+            if (int.TryParse(input, out int result)) {
                 switch (result)
                 {
                     case _optionProject:
-                        MenuProject();
+                        MenuProject(pathToProj ?? "none");
                         break;
                     case _optionWatch:
                         //
@@ -53,16 +52,13 @@ namespace BuildWatcher.Interfaces
             }            
         }
 
-        private void MenuProject()
+        private static void MenuProject(string pathToProj)
         {
-            //MenuText.AppendLine("1. Enter absoulute path to project.");
+            Console.WriteLine($"1. Enter absoulute path to project. (Current: {pathToProj})");
             
+            var input = Console.ReadLine();
         }
-
-        public string Menu => "Console";
-
-        public StringBuilder MenuText => new StringBuilder();
-
+                
         //public ConsoleMenu() 
         //{
         //    PresentMenu();

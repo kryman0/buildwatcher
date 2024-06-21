@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace BuildWatcher
 {
-    internal class CommandLineArgs
+    internal static class CommandLineArgs
     {
         private const string _projFlag = "-proj:";
         private const string _watchFlag = "-watch:";
         private const string _msbuildFlag = "-msbuild:";
 
-        private void SetCLArgs()
+        private static void SetCLArgs()
         {
             foreach (string flag in Environment.GetCommandLineArgs())
             {
@@ -32,15 +32,15 @@ namespace BuildWatcher
             }
         }
         
-        public string? PathToProj { get; private set; }
-        public string? PathToWatch { get; private set; }
-        public string? PathToMSBuild { get; private set; }
+        public static string PathToProj { get; private set; } = string.Empty;
+        public static string PathToWatch { get; private set; } = string.Empty;
+        public static string PathToMSBuild { get; private set; } = string.Empty;
 
-        public CommandLineArgs()
+        public static void Validate()
         {
             CommandLineArgsValidator.ValidateCommandLineArgs();
 
             SetCLArgs();
-        }        
+        }
     }
 }

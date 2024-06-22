@@ -3,7 +3,7 @@
 		<AssemblyName>BuildWatcher</AssemblyName>
 		<OutputType>Exe</OutputType>
 		<!--<OutDir>bin\$(Configuration)</OutDir>-->
-		<TargetFrameworks>net481;net8.0</TargetFrameworks>
+		<TargetFrameworks>net481;net8.0;netstandard2.0</TargetFrameworks>
 	  <LangVersion>default</LangVersion>
     <!--<TargetFramework>net472</TargetFramework>-->
     <!--<TargetFramework>net8.0</TargetFramework>-->
@@ -11,7 +11,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-	<ItemGroup>
+	<ItemGroup Condition="$(TargetFramework) != 'netstandard2.0'">
 		<PackageReference Include="Microsoft.Build" ExcludeAssets="runtime" Version="17.9.5" />
 		<PackageReference Include="Microsoft.Build.Locator" Version="1.7.8" />
 		<!--<PackageReference Include="Microsoft.Build.Framework" ExcludeAssets="runtime" Version="17.9.5" />-->

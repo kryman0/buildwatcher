@@ -1,19 +1,25 @@
 ﻿using BuildWatcher;
 using BuildWatcher.Handlers;
+using BuildWatcher.Interfaces;
+#if !NETSTANDARD
 using Microsoft.Build.Construction;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Execution;
 using Microsoft.Build.Locator;
+#endif
 
 //pathToMSBuild = "C:\\Program Files\\dotnet\\sdk\\8.0.203\\";
 //var clArgs = new CommandLineArgs();
+
+// todo: need to check which approach user chooses, cli or menu
 
 CommandLineArgs.Validate();
 
 var dotNetVersion = TargetDotNetVersionFactory.TargetDotNetVersion(CommandLineArgs.PathToMSBuild);
 
+#if !NETSTANDARD
 MSBuildLocator.RegisterMSBuildPath(dotNetVersion.PathToMSBuild);
-
+#endif
 
 void OnChanged(object sender, FileSystemEventArgs e)
 {

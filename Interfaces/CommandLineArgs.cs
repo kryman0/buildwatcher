@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuildWatcher
+namespace BuildWatcher.Interfaces
 {
     internal static class CommandLineArgs
     {
@@ -31,7 +31,7 @@ namespace BuildWatcher
                 }
             }
         }
-        
+
         public static string PathToProj { get; private set; } = string.Empty;
         public static string PathToWatch { get; private set; } = string.Empty;
         public static string PathToMSBuild { get; private set; } = string.Empty;

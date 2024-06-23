@@ -16,7 +16,7 @@
 		<PackageReference Include="Microsoft.Build.Locator" Version="1.7.8" />
 		<!--<PackageReference Include="Microsoft.Build.Framework" ExcludeAssets="runtime" Version="17.9.5" />-->
 		<!--<PackageReference Include="Microsoft.Build.Utilities.Core" ExcludeAssets="runtime" Version="17.9.5" />-->
-	</ItemGroup>	
+	</ItemGroup>
 	<Target Name="test">
 		<Message Text="VisualStudioVersion: $(VisualStudioVersion)" />
 		<Message Text="VSToolsPath: $(VSToolsPath)" />

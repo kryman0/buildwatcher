@@ -8,9 +8,9 @@ namespace BuildWatcher.Interfaces
 {
     internal class BaseMenu
     {
-        public static string PathToProj { get; set; } = string.Empty;
-        public static string PathToWatch { get; set; } = string.Empty;
-        public static string PathToMSBuild { get; set; } = string.Empty;
+        public static string PathToProj { get; set; } = "none";
+        public static string PathToWatch { get; set; } = "none";
+        public static string PathToMSBuild { get; set; } = "none";
 
         //public BaseMenu(string pathToProj, string pathToWatch, string pathToMSBuild)
         //{

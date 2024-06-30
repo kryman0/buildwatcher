@@ -12,7 +12,7 @@ namespace BuildWatcher.Validators
         public static bool IsUserInputOptionValid(string inputOption)
         {
             if (int.TryParse(inputOption, out int result))
-            {
+            {                
                 return ConsoleMenu.ValidOptions.Contains(result);
             }
 

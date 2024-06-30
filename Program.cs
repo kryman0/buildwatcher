@@ -1,6 +1,8 @@
 ﻿using BuildWatcher;
 using BuildWatcher.Handlers;
 using BuildWatcher.Interfaces;
+using BuildWatcher.Validators;
+
 #if !NETSTANDARD
 using Microsoft.Build.Construction;
 using Microsoft.Build.Evaluation;
@@ -28,11 +30,13 @@ void OnChanged(object sender, FileSystemEventArgs e)
         BuildHandler.Build(CommandLineArgs.PathToProj, null);
 
         Console.WriteLine(
-            $"File or Directory changed: {e.Name}\n" +
-            $"Location of the change: {e.FullPath}\n" +
-            $"ChangeType: {e.ChangeType}\n");
+            $"File or Directory changed: {e.Name}{Environment.NewLine}" +
+            $"Location of the change: {e.FullPath}{Environment.NewLine}" +
+            $"ChangeType: {e.ChangeType}{Environment.NewLine}");
 
-        Console.WriteLine("Press Enter to exit:\n");
+        Console.WriteLine("Waiting for changes...");
+        
+        Console.WriteLine(ConsoleMenu.MainMenu);
     }        
 }
 
@@ -47,10 +51,30 @@ try
         Console.WriteLine("Waiting for changes...");
         
         fsWatcher.Changed += OnChanged;
-        
-        Console.WriteLine("Press Enter to exit:\n");
-        
-        Console.ReadLine();
+
+        var input = string.Empty;
+
+        ConsoleMenu.PresentConsoleMenu();
+
+        while (true)
+        {
+            Console.WriteLine(ConsoleMenu.MainMenu);
+
+            input = Console.ReadKey().KeyChar.ToString();
+
+            if (ConsoleMenuValidator.IsUserInputNullOrEmpty(input))
+            {
+                Console.WriteLine(ConsoleMenu.InputMessagesDict[ConsoleMenu.InputMessages.InputIsNullOrEmtpy]);                
+            }
+            else if (!ConsoleMenuValidator.IsUserInputOptionValid(input))
+            {
+                Console.WriteLine(ConsoleMenu.InputMessagesDict[ConsoleMenu.InputMessages.InputIsNotAValidOption]);
+            }
+            else
+            {
+                ConsoleMenu.PresentSubMenu(input);
+            }
+        }
     }
 } catch (Exception ex)
 {

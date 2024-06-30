@@ -3,45 +3,58 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BuildWatcher.Interfaces
 {
     internal class ConsoleMenu : BaseMenu
     {
-        private const int _optionQuit = 0;
-        private const int _optionProject = 1;
-        private const int _optionWatch = 2;
-        private const int _optionMSBuild = 3;
-        private const int _optionMainMenu = 9;
+        private enum Options
+        {
+            Quit = 0,
+            Project = 1,
+            Watch = 2,
+            MSBuild = 3,
+            MainMenu = 9,
+        };
 
-        private const int _inputIsNullOrEmtpyMsg = 10;
+        public enum InputMessages
+        {
+            InputIsNullOrEmtpy = 1,
+            InputIsNotAValidOption = 2,
+        }
+
+        public static Dictionary<InputMessages, string> InputMessagesDict => new()
+        {
+            { InputMessages.InputIsNullOrEmtpy, "Input was empty. Try again." + _newLineChooseOption },
+            { InputMessages.InputIsNotAValidOption, "That's not an option! Try again." + _newLineChooseOption }
+        };
 
         public static int[] ValidOptions => [
-            _optionQuit,
-            _optionProject,
-            _optionWatch,
-            _optionMSBuild,
-            ];
+        
+            (int)Options.Quit,
+            (int)Options.Project,
+            (int)Options.Watch,
+            (int)Options.MSBuild,
+            (int)Options.MainMenu,
+        ];
 
         private const string _quit = "0. Quit";
         private const string _configureProject = "1. Configure Project";
         private const string _configureWatch = "2. Configure Folder";
-        private const string _configureMSBuild = "3. Configure MSBuild";        
-        private const string _presentMainMenu = "9. Present Menu";
+        private const string _configureMSBuild = "3. Configure MSBuild";
+        private const string _presentMainMenu = "9. Go to Main Menu";
 
-        private static readonly Dictionary<int, Action> _optionSubMenuDict = new()
+        private static readonly string _newLineChooseOption = Environment.NewLine + "Choose: ";
+
+        public static string MainMenu => _presentMainMenu;
+
+        private static readonly Dictionary<Options, Action> _optionSubMenuDict = new()
         {
-            { _optionQuit, QuitProgram },
-            { _optionProject, MenuProject },
-            { _optionMainMenu, PresentMainMenu },
+            { Options.Quit, QuitProgram },
+            { Options.Project, MenuProject },
+            { Options.MainMenu, PresentMainMenu },
             // todo: add others
-        };
-
-        private static readonly Dictionary<int, string> _wrongInputMessages = new()
-        {
-            { _inputIsNullOrEmtpyMsg, "Input was empty. Please try again." },
         };
 
         private static void QuitProgram()
@@ -61,7 +74,7 @@ namespace BuildWatcher.Interfaces
             sb.AppendLine($"{_configureProject} (current: {PathToProj}):");
             sb.AppendLine($"{_configureWatch} (current: {PathToWatch}):");
             sb.AppendLine($"{_configureMSBuild} (current: {PathToMSBuild})");
-            sb.AppendLine($"{_presentMainMenu}");
+            //sb.AppendLine($"{_presentMainMenu}");
             sb.AppendLine("-----------------------------------------------");
 
             Console.WriteLine(sb.ToString());
@@ -75,14 +88,14 @@ namespace BuildWatcher.Interfaces
 
             if (ConsoleMenuValidator.IsUserInputNullOrEmpty(input))
             {
-                Console.WriteLine(_wrongInputMessages[_inputIsNullOrEmtpyMsg]);
+                Console.WriteLine(InputMessagesDict[InputMessages.InputIsNullOrEmtpy]);
 
                 GetSubMenuByInputOption();
             }
 
             if (!ConsoleMenuValidator.IsUserInputOptionValid(input))
             {
-                Console.WriteLine($"{input} is not an option! Try again.");
+                Console.WriteLine(InputMessagesDict[InputMessages.InputIsNotAValidOption]);
 
                 GetSubMenuByInputOption();
             }
@@ -103,7 +116,7 @@ namespace BuildWatcher.Interfaces
 
             if (ConsoleMenuValidator.IsUserInputNullOrEmpty(input))
             {
-                Console.WriteLine(_wrongInputMessages[_inputIsNullOrEmtpyMsg]);
+                Console.WriteLine(InputMessagesDict[InputMessages.InputIsNullOrEmtpy]);
 
                 PresentMainMenu();
 
@@ -132,9 +145,9 @@ namespace BuildWatcher.Interfaces
             PathToProj = input;            
         }
 
-        private static void PresentSubMenu(string input)
+        public static void PresentSubMenu(string input)
         {
-            var option = int.Parse(input);
+            var option = (Options)int.Parse(input);
             
             _optionSubMenuDict[option]();
         }
@@ -163,7 +176,7 @@ namespace BuildWatcher.Interfaces
         {
             PresentMainMenu();
 
-            GetSubMenuByInputOption();
+            //GetSubMenuByInputOption();
         }
 
         //public ConsoleMenu(string pathToProj, string pathToWatch, string pathToMSBuild) : base(pathToProj, pathToWatch, pathToMSBuild)

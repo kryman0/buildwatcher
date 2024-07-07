@@ -11,6 +11,7 @@ namespace BuildWatcher.Handlers
     internal class ProjectHandler
     {
         public ProjectCollection ProjectCollection {  get; private set; }
+
         public Project Project { get; private set; }
 
         public ProjectHandler(string pathToProject)

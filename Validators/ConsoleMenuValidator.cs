@@ -1,4 +1,5 @@
-﻿using BuildWatcher.Interfaces;
+﻿using BuildWatcher.Exceptions;
+using BuildWatcher.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,21 @@ namespace BuildWatcher.Validators
 {
     internal static class ConsoleMenuValidator
     {
-        public static bool IsUserInputOptionValid(string inputOption)
+        private enum InputMessages
+        {
+            InputIsNullOrEmtpy = 1,
+            InputIsNotAValidOption = 2,
+        }
+
+        private static Dictionary<InputMessages, string> InputMessagesDict => new()
+        {
+            { InputMessages.InputIsNullOrEmtpy, "Input was empty. Try again." + _newLineChooseOption },
+            { InputMessages.InputIsNotAValidOption, "That's not an option! Try again." + _newLineChooseOption }
+        };
+
+        private static readonly string _newLineChooseOption = Environment.NewLine + "Choose: ";
+
+        private static bool IsUserInputOptionValid(string inputOption)
         {
             if (int.TryParse(inputOption, out int result))
             {                
@@ -19,17 +34,17 @@ namespace BuildWatcher.Validators
             return false;
         }       
         
-        public static bool IsPathToProjExtensionCorrect(string inputPathToProj)
+        private static bool IsPathToProjExtensionCorrect(string inputPathToProj)
         {
-            if (inputPathToProj.EndsWith(".csproj"))
+            if (ProjectValidator.ValidatePath(inputPathToProj))
             {
                 return true;
             }
-
+            
             return false;
         }
 
-        public static bool IsUserInputNullOrEmpty(string? input)
+        private static bool IsUserInputNullOrEmpty(string? input)
         {
             if (string.IsNullOrEmpty(input))
             {
@@ -37,6 +52,16 @@ namespace BuildWatcher.Validators
             }
 
             return false;
+        }
+
+        public static void Validate(string input, string? pathToProj, string? pathToWatch, string? pathToMSBuild)
+        {
+
+
+            if (!string.IsNullOrEmpty(pathToProj))
+            {
+                IsPathToProjExtensionCorrect(pathToProj);
+            }
         }
     }
 }

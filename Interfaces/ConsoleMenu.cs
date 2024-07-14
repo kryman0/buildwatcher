@@ -18,17 +18,7 @@ namespace BuildWatcher.Interfaces
             MainMenu = 9,
         };
 
-        public enum InputMessages
-        {
-            InputIsNullOrEmtpy = 1,
-            InputIsNotAValidOption = 2,
-        }
-
-        public static Dictionary<InputMessages, string> InputMessagesDict => new()
-        {
-            { InputMessages.InputIsNullOrEmtpy, "Input was empty. Try again." + _newLineChooseOption },
-            { InputMessages.InputIsNotAValidOption, "That's not an option! Try again." + _newLineChooseOption }
-        };
+        
 
         public static int[] ValidOptions => [
         
@@ -45,7 +35,7 @@ namespace BuildWatcher.Interfaces
         private const string _configureMSBuild = "3. Configure MSBuild";
         private const string _presentMainMenu = "9. Go to Main Menu";
 
-        private static readonly string _newLineChooseOption = Environment.NewLine + "Choose: ";
+        
 
         public static string MainMenu => _presentMainMenu;
 

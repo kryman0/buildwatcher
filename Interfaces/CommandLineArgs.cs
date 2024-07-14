@@ -38,7 +38,7 @@ namespace BuildWatcher.Interfaces
 
             SetPathsFromCLArgs();
 
-            CommandLineArgsValidator.ValidateProject(PathToProj);
+            CommandLineArgsValidator.ValidatePaths(PathToProj);
         }
     }
 }

@@ -9,12 +9,16 @@ namespace BuildWatcher.Validators
 {
     internal static class ProjectValidator
     {
-        public static void ValidateProjExtension(string pathToProj)
+        private const string _projExt = ".csproj";
+
+        public static bool ValidatePath(string pathToProj)
         {
-            if (!pathToProj.EndsWith(".csproj"))
+            if (pathToProj.EndsWith(_projExt))
             {
-                throw new MissingProjectException("Path to project is not ending with .csproj");
+                return true;
             }
+
+            return false;
         }
     }
 }

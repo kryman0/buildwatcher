@@ -9,7 +9,9 @@ using Microsoft.Build.Locator;
 
 // todo: need to check which approach user chooses, cli or menu
 
-if (CommandLineArgsValidator.ValidateNotToUseCommandLineInterface())
+ITargetDotNetVersionFactory dotNetVersion;
+
+if (!CommandLineArgsValidator.UseCLI())
 {
     ConsoleMenu.PresentConsoleMenu();
 
@@ -17,6 +19,7 @@ if (CommandLineArgsValidator.ValidateNotToUseCommandLineInterface())
 
     while (true)
     {
+        // todo: use a console menu helper for presenting menu options in the console menu validator
         Console.WriteLine(ConsoleMenu.MainMenu);
 
         input = Console.ReadKey().KeyChar.ToString();
@@ -39,7 +42,7 @@ else
 {
     CommandLineArgs.Validate();
 
-    var dotNetVersion = TargetDotNetVersionFactory.TargetDotNetVersion(CommandLineArgs.PathToMSBuild);
+    dotNetVersion = TargetDotNetVersionFactory.TargetDotNetVersion(CommandLineArgs.PathToMSBuild);
 
     MSBuildLocator.RegisterMSBuildPath(dotNetVersion.PathToMSBuild);
 }

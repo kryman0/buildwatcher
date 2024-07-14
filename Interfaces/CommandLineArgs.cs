@@ -32,15 +32,13 @@ namespace BuildWatcher.Interfaces
             }
         }
 
-        //public static string PathToProj { get; private set; } = string.Empty;
-        //public static string PathToWatch { get; private set; } = string.Empty;
-        //public static string PathToMSBuild { get; private set; } = string.Empty;
-
         public static void Validate()
         {
             CommandLineArgsValidator.ValidateCommandLineArgs(_projFlag, _watchFlag, _msbuildFlag);
 
             SetPathsFromCLArgs();
+
+            CommandLineArgsValidator.ValidateProject(PathToProj);
         }
     }
 }

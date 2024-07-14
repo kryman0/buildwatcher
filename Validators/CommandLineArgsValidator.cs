@@ -13,7 +13,7 @@ namespace BuildWatcher.Validators
         private static bool NotEnoughAmountOfArgs() => Environment.GetCommandLineArgs().Length < 4;
         private static bool TooManyArgs() => Environment.GetCommandLineArgs().Length > 4;
 
-        private static void AreCLArgsValid(string projFlag, string watchFlag, string msbuildFlag)
+        private static void CheckCLArgsAreSet(string projFlag, string watchFlag, string msbuildFlag)
         {
             string projArg = string.Empty, watchArg = string.Empty, msbuildArg = string.Empty, exMsg = string.Empty;
             
@@ -87,21 +87,23 @@ namespace BuildWatcher.Validators
             }
         }
 
+        public static void ValidateProject(string pathToProj)
+        {
+            ProjectValidator.ValidateProjExtension(pathToProj);
+        }
+
         public static void ValidateCommandLineArgs(string projFlag, string watchFlag, string msbuildFlag)
         {
             ValidateNumberOfCLArgs();
 
             ValidateCLFlags(projFlag, watchFlag, msbuildFlag);
 
-            if (!Environment.GetCommandLineArgs()[1].EndsWith(".csproj"))
-            {
-                throw new MissingProjectException("Path to project is wrong or filename not ending with .csproj");
-            }
+            CheckCLArgsAreSet(projFlag, watchFlag, msbuildFlag);
         }
 
-        public static bool ValidateNotToUseCommandLineInterface()
+        public static bool UseCLI()
         {
-            if (Environment.GetCommandLineArgs().Length == 1)
+            if (Environment.GetCommandLineArgs().Length == 4)
             {
                 return true;
             }

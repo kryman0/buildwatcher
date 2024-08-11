@@ -10,11 +10,6 @@ namespace BuildWatcher
     {
         public string PathToMSBuild { get; private set; }
 
-        //public ITargetDotNetVersionFactory TargetDotNetVersion()
-        //{
-        //    return this;
-        //}
-
         public DotNet8(string pathToMSBuild)
         {
             PathToMSBuild = pathToMSBuild;

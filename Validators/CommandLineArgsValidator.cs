@@ -87,12 +87,13 @@ namespace BuildWatcher.Validators
             }
         }
 
-        public static void ValidatePaths(string pathToProj)
+        public static void ValidatePaths(string pathToProj, string pathToWatch, string pathToMsBuild)
         {
             if (!ProjectValidator.ValidatePath(pathToProj))
             {
                 throw new MissingProjectException("Path to project is not ending with .csproj");
             }
+            // todo: add ms build validator
         }
 
         public static void ValidateCommandLineArgs(string projFlag, string watchFlag, string msbuildFlag)

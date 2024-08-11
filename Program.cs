@@ -14,21 +14,18 @@ ITargetDotNetVersionFactory dotNetVersion;
 if (!CommandLineArgsValidator.UseCLI())
 {
     ConsoleMenu.PresentConsoleMenu();
-
-    var input = string.Empty;
-
+    
     while (true)
     {
-        // todo: use a console menu helper for presenting menu options in the console menu validator
         Console.WriteLine(ConsoleMenu.MainMenu);
 
-        input = Console.ReadKey().KeyChar.ToString();
+        var input = Console.ReadKey().KeyChar.ToString();
 
         if (ConsoleMenuValidator.IsUserInputNullOrEmpty(input))
         {
             Console.WriteLine(ConsoleMenu.InputMessagesDict[ConsoleMenu.InputMessages.InputIsNullOrEmtpy]);
         }
-        else if (!ConsoleMenuValidator.IsUserInputOptionValid(input))
+        else if (!ConsoleMenu.HasUserChosenAnyOption(input))
         {
             Console.WriteLine(ConsoleMenu.InputMessagesDict[ConsoleMenu.InputMessages.InputIsNotAValidOption]);
         }

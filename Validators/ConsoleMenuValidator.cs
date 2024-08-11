@@ -10,31 +10,7 @@ namespace BuildWatcher.Validators
 {
     internal static class ConsoleMenuValidator
     {
-        private enum InputMessages
-        {
-            InputIsNullOrEmtpy = 1,
-            InputIsNotAValidOption = 2,
-        }
-
-        private static Dictionary<InputMessages, string> InputMessagesDict => new()
-        {
-            { InputMessages.InputIsNullOrEmtpy, "Input was empty. Try again." + _newLineChooseOption },
-            { InputMessages.InputIsNotAValidOption, "That's not an option! Try again." + _newLineChooseOption }
-        };
-
-        private static readonly string _newLineChooseOption = Environment.NewLine + "Choose: ";
-
-        private static bool IsUserInputOptionValid(string inputOption)
-        {
-            if (int.TryParse(inputOption, out int result))
-            {                
-                return ConsoleMenu.ValidOptions.Contains(result);
-            }
-
-            return false;
-        }       
-        
-        private static bool IsPathToProjExtensionCorrect(string inputPathToProj)
+        public static bool IsPathToProjExtensionCorrect(string inputPathToProj)
         {
             if (ProjectValidator.ValidatePath(inputPathToProj))
             {
@@ -44,7 +20,7 @@ namespace BuildWatcher.Validators
             return false;
         }
 
-        private static bool IsUserInputNullOrEmpty(string? input)
+        public static bool IsUserInputNullOrEmpty(string? input)
         {
             if (string.IsNullOrEmpty(input))
             {
@@ -52,16 +28,6 @@ namespace BuildWatcher.Validators
             }
 
             return false;
-        }
-
-        public static void Validate(string input, string? pathToProj, string? pathToWatch, string? pathToMSBuild)
-        {
-
-
-            if (!string.IsNullOrEmpty(pathToProj))
-            {
-                IsPathToProjExtensionCorrect(pathToProj);
-            }
         }
     }
 }

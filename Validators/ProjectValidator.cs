@@ -1,11 +1,4 @@
-﻿using BuildWatcher.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BuildWatcher.Validators
+﻿namespace BuildWatcher.Validators
 {
     internal static class ProjectValidator
     {

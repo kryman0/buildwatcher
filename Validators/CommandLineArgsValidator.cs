@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BuildWatcher.Validators
 {
-    internal class CommandLineArgsValidator
+    internal static class CommandLineArgsValidator
     {
         private static bool NotEnoughAmountOfArgs() => Environment.GetCommandLineArgs().Length < 4;
         private static bool TooManyArgs() => Environment.GetCommandLineArgs().Length > 4;
@@ -23,11 +23,13 @@ namespace BuildWatcher.Validators
                 {
                     projArg = flag.Substring(projFlag.Length);
                 }
-                else if (flag.StartsWith(watchFlag))
+                
+                if (flag.StartsWith(watchFlag))
                 {
                     watchArg = flag.Substring(watchFlag.Length);
                 }
-                else if (flag.StartsWith(msbuildFlag))
+                
+                if (flag.StartsWith(msbuildFlag))
                 {
                     msbuildArg = flag.Substring(msbuildFlag.Length);
                 }
@@ -35,13 +37,17 @@ namespace BuildWatcher.Validators
 
             if (projArg == string.Empty)
             {
-                exMsg = "Project path";
-            } else if (watchFlag == string.Empty)
+                exMsg = "Path to project";
+            } 
+            
+            if (watchArg == string.Empty)
             {
-                exMsg = "Watch directory";
-            } else if (msbuildArg == string.Empty)
+                exMsg = "Path to directory";
+            }
+            
+            if (msbuildArg == string.Empty)
             {
-                exMsg = "MSBuild path";
+                exMsg = "Path to MSBuild";
             }
 
             if (exMsg != string.Empty)
@@ -58,7 +64,7 @@ namespace BuildWatcher.Validators
 
             if (!flags.Any(f => f.StartsWith(projFlag)))
             {
-                exMsg = projFlag;
+                exMsg = "";
             }
             else if (!flags.Any(f => f.StartsWith(watchFlag)))
             {
@@ -89,10 +95,12 @@ namespace BuildWatcher.Validators
 
         public static void ValidatePaths(string pathToProj, string pathToWatch, string pathToMsBuild)
         {
-            if (!ProjectValidator.ValidatePath(pathToProj))
+            if (!ProjectValidator.ValidatePathExt(pathToProj))
             {
                 throw new MissingProjectException("Path to project is not ending with .csproj");
             }
+
+            if ()
             // todo: add ms build validator
         }
 

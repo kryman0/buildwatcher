@@ -4,14 +4,14 @@
     {
         private const string _projExt = ".csproj";
 
-        public static bool ValidatePath(string pathToProj)
+        public static bool Validate(string pathToProj)
         {
-            if (pathToProj.EndsWith(_projExt))
+            if (!Path.HasExtension(pathToProj) && Path.GetExtension(pathToProj).ToLower() != _projExt)
             {
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
     }
 }

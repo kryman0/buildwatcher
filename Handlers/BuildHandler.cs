@@ -1,11 +1,4 @@
-﻿using Microsoft.Build.Construction;
-using Microsoft.Build.Evaluation;
-using Microsoft.Build.Execution;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Build.Execution;
 
 namespace BuildWatcher.Handlers
 {

@@ -1,9 +1,4 @@
 ﻿using BuildWatcher.Validators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BuildWatcher.Interfaces
 {
@@ -34,8 +29,6 @@ namespace BuildWatcher.Interfaces
 
         public static void Validate()
         {
-            CommandLineArgsValidator.ValidateCommandLineArgs(_projFlag, _watchFlag, _msbuildFlag);
-
             SetPathsFromCLArgs();
 
             CommandLineArgsValidator.ValidatePaths(PathToProj, PathToWatch, PathToMSBuild);

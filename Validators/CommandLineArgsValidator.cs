@@ -1,10 +1,4 @@
 ﻿using BuildWatcher.Exceptions;
-using BuildWatcher.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BuildWatcher.Validators
 {
@@ -81,6 +75,7 @@ namespace BuildWatcher.Validators
             }
         }
 
+        // needs to be redone due to other args, e.g. -f, etc.
         private static void ValidateNumberOfCLArgs()
         {
             if (NotEnoughAmountOfArgs())
@@ -95,13 +90,10 @@ namespace BuildWatcher.Validators
 
         public static void ValidatePaths(string pathToProj, string pathToWatch, string pathToMsBuild)
         {
-            if (!ProjectValidator.ValidatePathExt(pathToProj))
+            if (!ProjectValidator.Validate(pathToProj))
             {
                 throw new MissingProjectException("Path to project is not ending with .csproj");
             }
-
-            if ()
-            // todo: add ms build validator
         }
 
         public static void ValidateCommandLineArgs(string projFlag, string watchFlag, string msbuildFlag)

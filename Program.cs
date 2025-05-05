@@ -1,48 +1,17 @@
 ﻿using BuildWatcher;
 using BuildWatcher.Handlers;
 using BuildWatcher.Interfaces;
-using BuildWatcher.Validators;
 using Microsoft.Build.Locator;
-
-//pathToMSBuild = "C:\\Program Files\\dotnet\\sdk\\8.0.203\\";
-//var clArgs = new CommandLineArgs();
-
-// todo: need to check which approach user chooses, cli or menu
 
 ITargetDotNetVersionFactory dotNetVersion;
 
-if (!CommandLineArgsValidator.UseCLI())
-{
-    ConsoleMenu.PresentConsoleMenu();
-    
-    while (true)
-    {
-        Console.WriteLine(ConsoleMenu.MainMenu);
+CommandLineArgs.Validate();
 
-        var input = Console.ReadKey().KeyChar.ToString();
+dotNetVersion = TargetDotNetVersionFactory.TargetDotNetVersion(CommandLineArgs.PathToMSBuild);
 
-        if (ConsoleMenuValidator.IsUserInputNullOrEmpty(input))
-        {
-            Console.WriteLine(ConsoleMenu.InputMessagesDict[ConsoleMenu.InputMessages.InputIsNullOrEmtpy]);
-        }
-        else if (!ConsoleMenu.HasUserChosenAnyOption(input))
-        {
-            Console.WriteLine(ConsoleMenu.InputMessagesDict[ConsoleMenu.InputMessages.InputIsNotAValidOption]);
-        }
-        else
-        {
-            ConsoleMenu.PresentSubMenu(input);
-        }
-    }
-}
-else
-{
-    CommandLineArgs.Validate();
+MSBuildLocator.RegisterMSBuildPath(dotNetVersion.PathToMSBuild);
 
-    dotNetVersion = TargetDotNetVersionFactory.TargetDotNetVersion(CommandLineArgs.PathToMSBuild);
-
-    MSBuildLocator.RegisterMSBuildPath(dotNetVersion.PathToMSBuild);
-}
+UseFsWatcher(true);
 
 void OnChanged(object sender, FileSystemEventArgs e)
 {
@@ -56,8 +25,8 @@ void OnChanged(object sender, FileSystemEventArgs e)
             $"ChangeType: {e.ChangeType}{Environment.NewLine}");
 
         Console.WriteLine("Waiting for changes...");
-        
-        Console.WriteLine(ConsoleMenu.MainMenu);
+
+        Console.WriteLine("Press Enter to exit\n");
     }        
 }
 
@@ -74,6 +43,10 @@ void UseFsWatcher(bool useCLI)
             Console.WriteLine("Waiting for changes...");
 
             fsWatcher.Changed += OnChanged;
+
+            Console.WriteLine("Press Enter to exit\n");
+
+            Console.ReadLine();
         }
     }
     catch (Exception ex)

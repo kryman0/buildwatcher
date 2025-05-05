@@ -1,18 +1,10 @@
-﻿using BuildWatcher.Exceptions;
-using BuildWatcher.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BuildWatcher.Validators
+﻿namespace BuildWatcher.Validators
 {
     internal static class ConsoleMenuValidator
     {
         public static bool IsPathToProjExtensionCorrect(string inputPathToProj)
         {
-            if (ProjectValidator.ValidatePath(inputPathToProj))
+            if (ProjectValidator.Validate(inputPathToProj))
             {
                 return true;
             }

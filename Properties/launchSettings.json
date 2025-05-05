@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BuildWatcher": {
+      "commandName": "Project",
+      "commandLineArgs": "-proj:D:\\source\\WebFormsTest2\\WebFormsTest2\\WebFormsTest2.csproj\r\n-watch:D:\\source\\WebFormsTest2\\WebFormsTest2\r\n\"-msbuild:C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\""
+    }
+  }
+}

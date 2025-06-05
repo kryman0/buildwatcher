@@ -11,7 +11,7 @@ dotNetVersion = TargetDotNetVersionFactory.TargetDotNetVersion(CommandLineArgs.P
 
 MSBuildLocator.RegisterMSBuildPath(dotNetVersion.PathToMSBuild);
 
-UseFsWatcher(true);
+UseFsWatcher();
 
 void OnChanged(object sender, FileSystemEventArgs e)
 {
@@ -30,7 +30,7 @@ void OnChanged(object sender, FileSystemEventArgs e)
     }        
 }
 
-void UseFsWatcher(bool useCLI)
+void UseFsWatcher()
 {
     try
     {

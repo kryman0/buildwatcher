@@ -1,5 +1,9 @@
-﻿using BuildWatcher.Validators;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using BuildWatcher.Validators;
 using System.Text;
+using System.Threading;
 
 namespace BuildWatcher.Interfaces
 {
@@ -143,7 +147,7 @@ namespace BuildWatcher.Interfaces
         {
             if (int.TryParse(input, out int result))
             {
-                return _validOptions.Contains(result);
+                return _validOptions.Any(x => x == result);
             }
 
             return false;

@@ -1,4 +1,6 @@
-﻿using BuildWatcher.Exceptions;
+﻿using System;
+using System.Linq;
+using BuildWatcher.Exceptions;
 
 namespace BuildWatcher.Validators
 {

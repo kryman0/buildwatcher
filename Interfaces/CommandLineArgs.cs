@@ -1,4 +1,5 @@
-﻿using BuildWatcher.Validators;
+﻿using System;
+using BuildWatcher.Validators;
 
 namespace BuildWatcher.Interfaces
 {

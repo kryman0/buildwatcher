@@ -1,4 +1,6 @@
-﻿using BuildWatcher;
+﻿using System;
+using System.IO;
+using BuildWatcher;
 using BuildWatcher.Handlers;
 using BuildWatcher.Interfaces;
 using Microsoft.Build.Locator;

@@ -1,4 +1,6 @@
-﻿namespace BuildWatcher.Validators
+﻿using System.IO;
+
+namespace BuildWatcher.Validators
 {
     internal static class ProjectValidator
     {
